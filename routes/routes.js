@@ -68,13 +68,52 @@ router.get('/get-stories', async (req, res) => {
 
 
 //Update by ID Method
-router.patch('/update/:id', (req, res) => {
-    res.send('Update by ID API')
+router.patch('/update-stories', async (req, res) => {
+    try {
+        const id = req.body.id;
+        const updatedData = {
+            title: req.body.title,
+            body: req.body.body,
+            dateCreated: req.body.dateCreated,
+            dateUpdated: req.body.dateUpdated,
+        };
+        const options = { new: true };
+
+        await Model.findByIdAndUpdate(
+            id, updatedData, options
+        )
+
+        res.send({
+            status: 'success',
+            message: 'Story updated successfully',
+            payload: updatedData,
+        });
+    }
+    catch (error) {
+        res.send({
+            status: 'error',
+            message: error.message
+        });
+    }
 })
 
 //Delete by ID Method
-router.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API')
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Model.findByIdAndDelete(id)
+        res.send({
+            status: 'success',
+            message: 'Story deleted successfully',
+            payload: data
+        });
+    }
+    catch (error) {
+        res.send({
+            status: 'error',
+            message: error.message
+        });
+    }
 })
 
 module.exports = router;
