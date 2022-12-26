@@ -12,13 +12,27 @@ router.post('/post', (req, res) => {
         dateUpdated: req.body.dateUpdated,
     })
     try {
-        data.save();
-        res.send({
-            status: 'success',
-            message: 'Story created successfully',
-            payload: data
+        Model.findOne({ title: req.body.title }, (error, found) => {
+            if (error) {
+                res.send(error);
+            }
+            else {
+                if (found) {
+                    res.send({
+                        status: 'error',
+                        message: 'Document already exists'
+                    });
+                }
+                else {
+                    data.save();
+                    res.send({
+                        status: 'success',
+                        message: 'Story created successfully',
+                        payload: data
+                    });
+                }
+            }
         });
-
     }
     catch (error) {
         res.send({
