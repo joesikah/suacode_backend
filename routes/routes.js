@@ -4,7 +4,7 @@ const router = express.Router()
 
 
 //Post Method
-router.post('/post', (req, res) => {
+router.post('/post-story', (req, res) => {
     const data = new Model({
         title: req.body.title,
         body: req.body.body,
@@ -43,15 +43,29 @@ router.post('/post', (req, res) => {
 })
 
 
+
 //Get all Method
-router.get('/getAll', (req, res) => {
-    res.send('Get All API')
+router.get('/get-stories', async (req, res) => {
+    try {
+        const data = await Model.find();
+        res.send({
+            status: 'success',
+            message: 'All stories retrieved successfully',
+            payload: data,
+            total: data.length
+        });
+
+    }
+    catch (error) {
+        res.send({
+            status: 'error',
+            message: error.message
+        });
+    }
 })
 
-//Get by ID Method
-router.get('/getOne/:id', (req, res) => {
-    res.send('Get by ID API')
-})
+
+
 
 //Update by ID Method
 router.patch('/update/:id', (req, res) => {
