@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+//get database url from .env
 const database_url = process.env.DB_URL;
 
 mongoose.set('strictQuery', false);
