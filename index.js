@@ -1,6 +1,6 @@
 const routes = require('./routes/routes');
 require('dotenv').config();
-
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 //get database url from .env
@@ -27,8 +27,8 @@ app.use(express.json());
 
 app.use('/api', routes)
 
-
-
+//add cors
+app.use(cors());
 
 
 
