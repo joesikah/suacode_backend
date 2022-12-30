@@ -19,6 +19,8 @@ database.on('error', (error) => {
 database.once('connected', () => {
     console.log('Connected to database');
 })
+
+//express
 const app = express();
 
 app.use(express.json());
