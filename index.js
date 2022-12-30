@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const database_url = process.env.DB_URL;
 
 mongoose.set('strictQuery', false);
+
+//connect to db
 mongoose.connect(database_url);
 const database = mongoose.connection;
 
