@@ -47,13 +47,33 @@ router.post('/post-story', (req, res) => {
 //Get all Method
 router.get('/get-stories', async (req, res) => {
     try {
-        const data = await Model.find();
-        res.send({
-            status: 'success',
-            message: 'All stories retrieved successfully',
-            payload: data,
-            total: data.length
-        });
+        const filter = req.query;
+
+        function isEmpty(obj) {
+            return Object.keys(obj).length === 0;
+        }
+
+        if (isEmpty(filter)) {
+            const data = await Model.find();
+            res.send({
+                status: 'success',
+                message: 'All stories retrieved successfully',
+                payload: data,
+                total: data.length
+            });
+        }
+        else {
+            const filteredData = await Model.find(filter);
+
+            console.log(filter)
+
+            res.send({
+                status: 'success',
+                message: 'Filtered stories retrieved successfully',
+                payload: filteredData,
+                total: filteredData.length
+            });
+        }
 
     }
     catch (error) {
